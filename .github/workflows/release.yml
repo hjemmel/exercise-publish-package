@@ -1,0 +1,18 @@
+name: Release package
+
+on: push
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 14
+          registry-url: https://npm.pkg.github.com/
+      - run: npm install
+      - run: npm publish
+        working-directory: ./sample-packages/npm
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
